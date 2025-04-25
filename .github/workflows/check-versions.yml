@@ -16,13 +16,13 @@ jobs:
     steps:
     - name: Checkout Front
       uses: actions/checkout@v4
-    - name: Scanner
-      uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.0.0"
+      
       
     - name: Get Front Version
       id: front_version
       run: |
         echo "FRONT_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
+        
     - name: Clone Back
       run: |
         git clone --depth 1 https://github.com/horaciovasconcellos/back.git back
