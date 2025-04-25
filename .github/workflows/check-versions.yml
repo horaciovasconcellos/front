@@ -1,0 +1,27 @@
+name: Check Versions
+on:
+ workflow_dispatch:
+
+jobs:
+  check-versions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Front
+      uses: actions/checkout@v4
+    - name: Get Front Version
+      id: front_version
+      run: |
+        echo "FRONT_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
+    - name: Clone Back
+      run: |
+        git clone --depth 1 https://github.com/horaciovasconcellos/back.git back
+
+    - name: Get Back Version
+      id: back_version
+      run: |
+        echo "BACK_VERSION=$(cat back/package.json | jq -r .version)" >> $GITHUB_ENV
+
+    - name: Print Versions
+      run: |
+        echo "Front Version: $FRONT_VERSION"
+        echo "Back Version: $BACK_VERSION"
